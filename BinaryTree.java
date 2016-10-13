@@ -108,6 +108,12 @@ public class BinaryTree<T>{
 	public int width(){
 		// TODO: Modify this method-body to compute and return the width 
 		// of the tree.
+          /*if (this.height == 0) return 0;
+          int[] sizes = new int[this.height()];
+          WilkersonQueue<BinaryNode> queue = new WilkersonQueue<BinaryNode());
+          while (!queue.isEmpty()) {
+            
+          }*/
 		System.out.println("Feature not implemented yet, returning 0");
 		return 0;
 	}
@@ -115,8 +121,17 @@ public class BinaryTree<T>{
 	public String breadthFirstTraverse(){
 		// TODO: Modify this method-body to return a string corresponding
 		// to the bread-first-traversal of the tree	
-		System.out.println("Feature not implemented yet, returning empty string");	
-		return "";
+          WilkersonQueue<BinaryNode> queue = new WilkersonQueue<BinaryNode>();
+          if (this.root == null) return null;
+          String returnString = "";
+          queue.enqueue(this.root);
+          while (!queue.isEmpty()) {
+            BinaryNode node = (BinaryNode) queue.dequeue();
+            returnString += node.getData() + " ";
+            if (node.getLeftNode() != null) queue.enqueue(node.getLeftNode());
+            if (node.getRightNode() != null) queue.enqueue(node.getRightNode());
+          }
+          return returnString.trim();
 	}
 
 	public String preOrderTraverse(){

@@ -44,6 +44,10 @@ public class WilkersonQueue<T> {
     return this.size;
   }
 
+  public boolean isEmpty() {
+    return (size == 0);
+  }
+
   @Override
   public String toString() {
     if (size == 0) return "[]";
