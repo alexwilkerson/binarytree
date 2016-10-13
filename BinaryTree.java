@@ -244,29 +244,27 @@ public class BinaryTree<T>{
                     stack2.push(currentNode);
                   }
                   while(!stack2.isEmpty()) {
-                    returnString += stack2.pop() + " ";
+                    returnString += stack2.pop().getData() + " ";
                   }
                   return returnString;
 		}
 
-                @SuppressWarnings("unchecked")
 		public String inOrderTraverse(){	
                   String returnString = "";
                   MyStack<BinaryNode> stack = new MyStack<BinaryNode>();
-                  stack.push(root);
+                  BinaryNode currentNode = root;
+                  stack.push(currentNode);
                   while (!stack.isEmpty()) {
-                    BinaryNode currentNode = stack.peek();
-                    if (currentNode.getLeftNode() != null) {
-                      stack.push(currentNode.getLeftNode());
-                      currentNode.setLeftNode(null);
-                    } else {
-                      returnString += stack.pop() + " ";
-                      if (currentNode.getRightNode() != null) {
-                        stack.push(currentNode.getRightNode());
-                      }
+                    while (currentNode != null) {
+                      stack.push(currentNode);
+                      currentNode = currentNode.getLeftNode();
                     }
+                    
+                    currentNode = stack.pop();
+                    returnString += currentNode.getData() + " ";
+                    currentNode = currentNode.getRightNode();
                   }
-                  return returnString.trim();
+                  return returnString;
 		}
 	}
 }
