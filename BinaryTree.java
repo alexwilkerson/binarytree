@@ -151,7 +151,6 @@ public class BinaryTree<T>{
 	}
 
 	public String inOrderTraverse(){
-          if (this.root == null) return null;
           return root.inOrderTraverse().trim();
         }
         
@@ -232,24 +231,20 @@ public class BinaryTree<T>{
 			return stringBuffer.toString();				
 		}
 
-                @SuppressWarnings("unchecked")
 		public String postOrderTraverse(){			
                   String returnString = "";
-                  MyStack<BinaryNode> stack = new MyStack<BinaryNode>();
-                  stack.push(root);
-                  while (!stack.isEmpty()) {
-                    BinaryNode currentNode = stack.peek();
-                    if (currentNode.isLeaf()) returnString += stack.pop() + " ";
-                    else {
-                      if (currentNode.getRightNode() != null) {
-                        stack.push(currentNode.getRightNode());
-                        currentNode.setRightNode(null);
-                      }
-                      if (currentNode.getLeftNode() != null) {
-                        stack.push(currentNode.getLeftNode());
-                        currentNode.setLeftNode(null);
-                      }
-                    }
+                  MyStack<BinaryNode> stack1 = new MyStack<BinaryNode>();
+                  MyStack<BinaryNode> stack2 = new MyStack<BinaryNode>();
+                  stack1.push(root);
+                  BinaryNode currentNode;
+                  while(!stack1.isEmpty()) {
+                    currentNode = stack1.pop();
+                    if (currentNode.getLeftNode() != null) stack1.push(currentNode.getLeftNode());
+                    if (currentNode.getRightNode() != null) stack1.push(currentNode.getRightNode());
+                    stack2.push(currentNode);
+                  }
+                  while(!stack2.isEmpty()) {
+                    returnString += stack2.pop() + " ";
                   }
                   return returnString;
 		}
@@ -271,7 +266,7 @@ public class BinaryTree<T>{
                       }
                     }
                   }
-                  return returnString;
+                  return returnString.trim();
 		}
 	}
 }
