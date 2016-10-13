@@ -106,21 +106,27 @@ public class BinaryTree<T>{
 	}
 
 	public int width(){
-		// TODO: Modify this method-body to compute and return the width 
-		// of the tree.
-          /*if (this.height == 0) return 0;
-          int[] sizes = new int[this.height()];
-          WilkersonQueue<BinaryNode> queue = new WilkersonQueue<BinaryNode());
+          if (this.root == null) return 0;
+          WilkersonQueue<BinaryNode> queue = new WilkersonQueue<BinaryNode>();
+          queue.enqueue(this.root);
+          queue.enqueue(null);
+          int width = 1;
           while (!queue.isEmpty()) {
-            
-          }*/
-		System.out.println("Feature not implemented yet, returning 0");
-		return 0;
+            BinaryNode node = (BinaryNode) queue.dequeue();
+            if (node == null) {
+              if (queue.getSize() > 0) {
+                if (queue.getSize() > width) width = queue.getSize();
+                queue.enqueue(null);
+              }
+            } else {
+              if (node.getLeftNode() != null) queue.enqueue(node.getLeftNode());
+              if (node.getRightNode() != null) queue.enqueue(node.getRightNode());
+            }
+          }
+          return width;
 	}
 
 	public String breadthFirstTraverse(){
-		// TODO: Modify this method-body to return a string corresponding
-		// to the bread-first-traversal of the tree	
           WilkersonQueue<BinaryNode> queue = new WilkersonQueue<BinaryNode>();
           if (this.root == null) return null;
           String returnString = "";
