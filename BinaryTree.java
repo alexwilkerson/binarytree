@@ -253,8 +253,7 @@ public class BinaryTree<T>{
                   String returnString = "";
                   MyStack<BinaryNode> stack = new MyStack<BinaryNode>();
                   BinaryNode currentNode = root;
-                  stack.push(currentNode);
-                  while (!stack.isEmpty()) {
+                  while (!stack.isEmpty() || currentNode != null) {
                     while (currentNode != null) {
                       stack.push(currentNode);
                       currentNode = currentNode.getLeftNode();
