@@ -3,11 +3,10 @@ public class WilkersonQueueTest {
     WilkersonQueue<Integer> queue = new WilkersonQueue<Integer>();
 
  
-    String[] seq = {"A", "B", "C", "D", "E", "F", "G", "H"};
-    BinaryTree<String> tree = new BinaryTree<String>(seq);
-    System.out.println("tree height: " + tree.height());
-
-    System.out.println("tree width: " + tree.width());
+    String nullSymbol = "0";
+    String[] seq = {"A", "B", "C", "D", "0", "0", "G", "H", "I", "0", "0", "0", "0","0", "J"};
+    BinaryTree<String> tree = new BinaryTree<String>(seq, nullSymbol);
+    System.out.println(tree.inOrderTraverse());
 
   }
 }

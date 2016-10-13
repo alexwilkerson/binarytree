@@ -105,7 +105,7 @@ public class BinaryTree<T>{
 		return root.height();
 	}
 
-	public int width(){
+        public int width(){
           if (this.root == null) return 0;
           WilkersonQueue<BinaryNode> queue = new WilkersonQueue<BinaryNode>();
           queue.enqueue(this.root);
@@ -124,11 +124,11 @@ public class BinaryTree<T>{
             }
           }
           return width;
-	}
+        }
 
-	public String breadthFirstTraverse(){
-          WilkersonQueue<BinaryNode> queue = new WilkersonQueue<BinaryNode>();
+        public String breadthFirstTraverse(){
           if (this.root == null) return null;
+          WilkersonQueue<BinaryNode> queue = new WilkersonQueue<BinaryNode>();
           String returnString = "";
           queue.enqueue(this.root);
           while (!queue.isEmpty()) {
@@ -138,21 +138,24 @@ public class BinaryTree<T>{
             if (node.getRightNode() != null) queue.enqueue(node.getRightNode());
           }
           return returnString.trim();
-	}
+        }
 
 	public String preOrderTraverse(){
-		return root.preOrderTraverse().trim();				
-	}
+          if (this.root == null) return null;
+          return root.preOrderTraverse().trim();				
+        }
 
-	public String postOrderTraverse(){
-		return root.postOrderTraverse().trim();
+        public String postOrderTraverse(){
+          if (this.root == null) return null;
+          return root.postOrderTraverse().trim();
 	}
 
 	public String inOrderTraverse(){
-		return root.inOrderTraverse().trim();
-	}
-	
-	class BinaryNode<T>{
+          if (this.root == null) return null;
+          return root.inOrderTraverse().trim();
+        }
+        
+        protected class BinaryNode<T>{
 		private T data = null;
 		private BinaryNode<T> leftNode = null;
 		private BinaryNode<T> rightNode = null;
@@ -229,15 +232,46 @@ public class BinaryTree<T>{
 			return stringBuffer.toString();				
 		}
 
+                @SuppressWarnings("unchecked")
 		public String postOrderTraverse(){			
-			System.out.println("This method is yet to be implemented");
-			return "0";
+                  String returnString = "";
+                  MyStack<BinaryNode> stack = new MyStack<BinaryNode>();
+                  stack.push(root);
+                  while (!stack.isEmpty()) {
+                    BinaryNode currentNode = stack.peek();
+                    if (currentNode.isLeaf()) returnString += stack.pop() + " ";
+                    else {
+                      if (currentNode.getRightNode() != null) {
+                        stack.push(currentNode.getRightNode());
+                        currentNode.setRightNode(null);
+                      }
+                      if (currentNode.getLeftNode() != null) {
+                        stack.push(currentNode.getLeftNode());
+                        currentNode.setLeftNode(null);
+                      }
+                    }
+                  }
+                  return returnString;
 		}
 
+                @SuppressWarnings("unchecked")
 		public String inOrderTraverse(){	
-
-			System.out.println("This method is yet to be implemented");
-			return "duh";
+                  String returnString = "";
+                  MyStack<BinaryNode> stack = new MyStack<BinaryNode>();
+                  stack.push(root);
+                  while (!stack.isEmpty()) {
+                    BinaryNode currentNode = stack.peek();
+                    if (currentNode.getLeftNode() != null) {
+                      stack.push(currentNode.getLeftNode());
+                      currentNode.setLeftNode(null);
+                    } else {
+                      returnString += stack.pop() + " ";
+                      if (currentNode.getRightNode() != null) {
+                        stack.push(currentNode.getRightNode());
+                      }
+                    }
+                  }
+                  return returnString;
 		}
 	}
 }
