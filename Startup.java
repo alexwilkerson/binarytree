@@ -14,6 +14,7 @@ public class Startup{
 
 		BinarySearchTree<Integer> tree = new BinarySearchTree<Integer>(breadthFirstSequence, nullSymbol);
 
+                System.out.println(tree.contains(27));
 		System.out.println("Height = " + tree.height());
 		System.out.println("Width = " + tree.width());
 		System.out.println("preOrderTraverse: " + tree.preOrderTraverse());		

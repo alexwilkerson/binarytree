@@ -1,4 +1,6 @@
-public class BinarySearchTree<T> extends BinaryTree<T> {
+import java.lang.Comparable;
+
+public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTree<T> {
   public BinarySearchTree() {
     super();
   }
@@ -19,6 +21,20 @@ public class BinarySearchTree<T> extends BinaryTree<T> {
     // stubbed
   }
 
+  public boolean contains(T data) {
+    BinaryNode<T> currentNode = root;
+    while(true) {
+      int compare = data.compareTo(currentNode.getData());
+      if (compare == 0) return true;
+      else if (compare < 0 && currentNode.getLeftNode() != null) {
+        currentNode = currentNode.getLeftNode();
+      } else if (compare > 0 && currentNode.getRightNode() != null) {
+        currentNode = currentNode.getRightNode();
+      } else return false;
+    }
+  }
+
+  /*
   public boolean contains(T data){        
     MyStack<BinaryNode> stack = new MyStack<BinaryNode>();
     BinaryNode currentNode = root;
@@ -32,6 +48,8 @@ public class BinarySearchTree<T> extends BinaryTree<T> {
       currentNode = currentNode.getRightNode();
     }
     return false;
-  }
+  } */
+
+  
 
 }
