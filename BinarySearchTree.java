@@ -14,11 +14,37 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
   }
 
   public void insert(T data) {
-    // stubbed
+    BinaryNode<T> newNode = new BinaryNode<T>(data);
+    if (this.root == null) {
+      root = newNode;
+    }
+    BinaryNode<T> currentNode = this.root;
+    while(true) {
+      int compare = data.compareTo(currentNode.getData());
+      if (compare == 0) return;
+      if (compare < 0) {
+        if (currentNode.getLeftNode() == null) {
+          currentNode.setLeftNode(newNode);
+          return;
+        }
+        currentNode = currentNode.getLeftNode();
+      } else if (compare > 0) {
+        if (currentNode.getRightNode() == null) {
+          currentNode.setRightNode(newNode);
+          return;
+        }
+        currentNode = currentNode.getRightNode();
+      }
+    }
   }
 
   public void remove(T data) {
-    // stubbed
+    /*
+    if (this.root == null) return;
+    BinaryNode<T> currentNode = this.root;
+    while(true) {
+      int compare = data.compareTo(currentNode.getData());
+    }*/
   }
 
   public boolean contains(T data) {
