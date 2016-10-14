@@ -39,12 +39,61 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
   }
 
   public void remove(T data) {
-    /*
-    if (this.root == null) return;
+    if (this.root == null || data == null) return;
+    BinaryNode<T> parentNode = null;
     BinaryNode<T> currentNode = this.root;
-    while(true) {
+    while(currentNode != null) {
       int compare = data.compareTo(currentNode.getData());
-    }*/
+      if (compare == 0) { // match found
+        // case: no children
+        if (currentNode.isLeaf()) { 
+          if (parentNode == null) { // case: root node
+            this.root = null;
+            return;
+          } else {
+            if (parentNode.getLeftNode() == currentNode) parentNode.setLeftNode(null);
+            else parentNode.setRightNode(null);
+            return;
+          }
+        }
+        // case: one child
+        else if (currentNode.getLeftNode() == null || currentNode.getRightNode() == null) {
+          // case: node has left child
+          if (currentNode.getLeftNode() != null) { 
+            if (parentNode == null) { // case: root node
+              this.root = currentNode.getLeftNode();
+              return;
+            } else {
+              if (parentNode.getLeftNode() == currentNode) parentNode.setLeftNode(currentNode.getLeftNode());
+              else parentNode.setRightNode(currentNode.getLeftNode());
+              return;
+            }
+          // case: node has right child
+          } else {
+            if (parentNode == null) { // case: root node
+              this.root = currentNode.getRightNode();
+              return;
+            } else {
+              if (parentNode.getLeftNode() == currentNode) parentNode.setLeftNode(currentNode.getRightNode());
+              else parentNode.setRightNode(currentNode.getRightNode());
+              return;
+            }
+          }
+        }
+        // case: two children
+        else {
+          return;
+        }
+        // this else statement should be where two nodes is dealt with.
+
+      } else if (compare < 0) {
+        parentNode = currentNode;
+        currentNode = parentNode.getLeftNode();
+      } else if (compare > 0) {
+        parentNode = currentNode;
+        currentNode = parentNode.getRightNode();
+      } else return;
+    } // end while loop
   }
 
   public boolean contains(T data) {
