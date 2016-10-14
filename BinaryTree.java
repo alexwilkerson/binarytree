@@ -152,8 +152,6 @@ public class BinaryTree<T>{
           return returnString.trim();
         }
 
-        // This method is fully implemented within the BinaryNode subclass.
-        // For more information, look there.
         public String preOrderTraverse(){
           if (this.root == null) return null;
           return root.preOrderTraverse().trim();                                
@@ -166,7 +164,10 @@ public class BinaryTree<T>{
           return root.postOrderTraverse().trim();
         }
 
+        // This method is fully implemented within the BinaryNode subclass.
+        // For more information, look there.
         public String inOrderTraverse(){
+          if (this.root == null) return null;
           return root.inOrderTraverse().trim();
         }
         
