@@ -47,45 +47,18 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
       if (compare == 0) { // match found
         // case: no children
         if (currentNode.isLeaf()) { 
-          if (parentNode == null) { // case: root node
-            this.root = null;
-            return;
-          } else {
-            if (parentNode.getLeftNode() == currentNode) parentNode.setLeftNode(null);
-            else parentNode.setRightNode(null);
-            return;
-          }
+          parentNode = noChildren(parentNode, currentNode);
+          return;
         }
         // case: one child
         else if (currentNode.getLeftNode() == null || currentNode.getRightNode() == null) {
-          // case: node has left child
-          if (currentNode.getLeftNode() != null) { 
-            if (parentNode == null) { // case: root node
-              this.root = currentNode.getLeftNode();
-              return;
-            } else {
-              if (parentNode.getLeftNode() == currentNode) parentNode.setLeftNode(currentNode.getLeftNode());
-              else parentNode.setRightNode(currentNode.getLeftNode());
-              return;
-            }
-          // case: node has right child
-          } else {
-            if (parentNode == null) { // case: root node
-              this.root = currentNode.getRightNode();
-              return;
-            } else {
-              if (parentNode.getLeftNode() == currentNode) parentNode.setLeftNode(currentNode.getRightNode());
-              else parentNode.setRightNode(currentNode.getRightNode());
-              return;
-            }
-          }
+          parentNode = oneChild(parentNode, currentNode);
+          return;
         }
         // case: two children
         else {
           return;
         }
-        // this else statement should be where two nodes is dealt with.
-
       } else if (compare < 0) {
         parentNode = currentNode;
         currentNode = parentNode.getLeftNode();
@@ -94,6 +67,41 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
         currentNode = parentNode.getRightNode();
       } else return;
     } // end while loop
+  }
+
+  public BinaryNode<T> noChildren(BinaryNode<T> parentNode, BinaryNode<T> currentNode) {
+    if (parentNode == null) { // case: root node
+      this.root = null;
+      return null;
+    } else {
+      if (parentNode.getLeftNode() == currentNode) parentNode.setLeftNode(null);
+      else parentNode.setRightNode(null);
+      return parentNode;
+    }
+  }
+
+  public BinaryNode<T> oneChild(BinaryNode<T> parentNode, BinaryNode<T> currentNode) {
+    // case: node has left child
+    if (currentNode.getLeftNode() != null) { 
+      if (parentNode == null) { // case: root node
+        this.root = currentNode.getLeftNode();
+        return null;
+      } else {
+        if (parentNode.getLeftNode() == currentNode) parentNode.setLeftNode(currentNode.getLeftNode());
+        else parentNode.setRightNode(currentNode.getLeftNode());
+        return parentNode;
+      }
+    // case: node has right child
+    } else {
+      if (parentNode == null) { // case: root node
+        this.root = currentNode.getRightNode();
+        return null;
+      } else {
+        if (parentNode.getLeftNode() == currentNode) parentNode.setLeftNode(currentNode.getRightNode());
+        else parentNode.setRightNode(currentNode.getRightNode());
+        return parentNode;
+      }
+    }
   }
 
   public boolean contains(T data) {
