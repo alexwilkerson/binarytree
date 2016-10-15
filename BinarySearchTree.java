@@ -1,5 +1,9 @@
 import java.lang.Comparable;
 
+// This class extends the BinaryTree class. Since the methods
+// implemented below require comparisons, the generic type
+// extends the Comparable type. Otherwise, all constructors
+// are simply inherited from the BinaryTree class.
 public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTree<T> {
   public BinarySearchTree() {
     super();
@@ -13,6 +17,11 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
     super(seq, nullSymbol);
   }
 
+  // This insert method traverses the tree using the compareTo()
+  // method to determine where on the tree the new node
+  // should be inserted so as to preserve the structure
+  // of the BST. If a duplicate entry is found, the method
+  // returns without doing anything.
   public void insert(T data) {
     BinaryNode<T> newNode = new BinaryNode<T>(data);
     if (this.root == null) {
@@ -38,6 +47,24 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
     }
   }
 
+  // The remove method was broken up into four separate methods
+  // because of the complexity of removing a node. The method uses
+  // a loop to intelligently traverse the tree until a match is
+  // found. When a match is found, a number of things can happen:
+  // case 1: the node has no child nodes
+  //   * in this case, the parent's connection to the node is made null
+  // case 2: the node has one child node
+  //   * in this case, the parents' connection to the node is changed
+  //   * to the child's connection to its child.
+  // case 3: the node has two children
+  //   * in this case, a loop iterates through the nodes descendants.
+  //   * first, the right subtree is selected and a successor for the
+  //   * removed node is found once a node is found with no left children.
+  //   * the deleted node is then replaced with the successor node and the
+  //   * old successor node is deleted.
+  //
+  // these methods are listed below as:
+  // noChildren(), oneChild(), and twoChildren()
   public void remove(T data) {
     if (this.root == null || data == null) return;
     BinaryNode<T> parentNode = null;
@@ -69,6 +96,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
     } // end while loop
   }
 
+  // for information about this method, see comment above remove() method.
   public T twoChildren(BinaryNode<T> currentNode) {
     BinaryNode<T> successorNode = currentNode.getRightNode();
     BinaryNode<T> parentOfSuccessorNode = currentNode;
@@ -88,6 +116,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
     return data;
   }
 
+  // for information about this method, see comment above remove() method.
   public BinaryNode<T> noChildren(BinaryNode<T> parentNode, BinaryNode<T> currentNode) {
     if (parentNode == null) { // case: root node
       this.root = null;
@@ -99,6 +128,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
     }
   }
 
+  // for information about this method, see comment above remove() method.
   public BinaryNode<T> oneChild(BinaryNode<T> parentNode, BinaryNode<T> currentNode) {
     // case: node has left child
     if (currentNode.getLeftNode() != null) { 
@@ -123,6 +153,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
     }
   }
 
+  // The contains() method traverses the tree in the most efficient
+  // way by comparing the data with the current node and travelling
+  // in the direction of that node until a match is or is not found.
   public boolean contains(T data) {
     BinaryNode<T> currentNode = root;
     while(true) {
@@ -135,23 +168,5 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
       } else return false;
     }
   }
-
-  /*
-  public boolean contains(T data){        
-    MyStack<BinaryNode> stack = new MyStack<BinaryNode>();
-    BinaryNode currentNode = root;
-    while (!stack.isEmpty() || currentNode != null) {
-      while (currentNode != null) {
-        stack.push(currentNode);
-        currentNode = currentNode.getLeftNode();
-      }
-      currentNode = stack.pop();
-      if (data.equals(currentNode.getData())) return true;
-      currentNode = currentNode.getRightNode();
-    }
-    return false;
-  } */
-
-  
 
 }
