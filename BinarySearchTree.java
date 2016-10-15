@@ -57,7 +57,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
         }
         // case: two children
         else {
-          return;
+          currentNode.setData(twoChildren(currentNode));
         }
       } else if (compare < 0) {
         parentNode = currentNode;
@@ -67,6 +67,25 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
         currentNode = parentNode.getRightNode();
       } else return;
     } // end while loop
+  }
+
+  public T twoChildren(BinaryNode<T> currentNode) {
+    BinaryNode<T> successorNode = currentNode.getRightNode();
+    BinaryNode<T> parentOfSuccessorNode = currentNode;
+    while (successorNode.getLeftNode() != null) {
+      parentOfSuccessorNode = successorNode;
+      successorNode = parentOfSuccessorNode.getLeftNode();
+    }
+    T data = successorNode.getData();
+    // case: node has no children
+    if (successorNode.isLeaf()) {
+      if (parentOfSuccessorNode.getRightNode() == successorNode) parentOfSuccessorNode.setRightNode(null);
+      else parentOfSuccessorNode.setLeftNode(null);
+    }
+    // case: node has one child
+    else if (parentOfSuccessorNode.getLeftNode() == successorNode) parentOfSuccessorNode.setLeftNode(successorNode.getRightNode());
+    else parentOfSuccessorNode.setRightNode(successorNode.getRightNode());
+    return data;
   }
 
   public BinaryNode<T> noChildren(BinaryNode<T> parentNode, BinaryNode<T> currentNode) {
